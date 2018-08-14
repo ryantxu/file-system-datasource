@@ -1,0 +1,43 @@
+{
+  "name": "ryantxu-avro-datasource",
+  "version": "0.0.1-dev",
+  "description": "Apache Avro data in grafana",
+  "scripts": {
+    "build": "webpack --config webpack.config.prod.js",
+    "dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "test": "jest --config jest.config.js"
+  },
+  "author": "Ryan McKinley",
+  "license": "Apache",
+  "dependencies": {
+    "avsc": "^5.4.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.22.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "@types/grafana": "https://git@github.com/CorpGlory/types-grafana.git",
+    "@types/jest": "^22.2.3",
+    "@types/lodash": "^4.14.74",
+    "@types/react": "^16.2.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.0.1",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
+    "grafana-sdk-mocks": "github:grafana/grafana-sdk-mocks",
+    "jest": "^23.0.1",
+    "ng-annotate-webpack-plugin": "^0.3.0",
+    "replace-in-file-webpack-plugin": "^1.0.6",
+    "style-loader": "^0.21.0",
+    "ts-jest": "^22.4.6",
+    "ts-loader": "^4.3.0",
+    "typescript": "^2.8.3",
+    "webpack": "^4.9.1",
+    "webpack-cli": "^2.1.4"
+  }
+}

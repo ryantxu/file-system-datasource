@@ -1,0 +1,20 @@
+{
+  "type": "datasource",
+  "name": "Flux (InfluxDB) [BETA]",
+  "id": "ryantxu-avro-datasource",
+  "metrics": true,
+  "explote": true,
+  "alerting": false,
+  "queryOptions": {
+    "minInterval": true
+  },
+  "info": {
+    "description": "Apache Avro in Grafa",
+    "logos": {
+      "small": "img/avro.svg",
+      "large": "img/avro.svg"
+    },
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  }
+}
