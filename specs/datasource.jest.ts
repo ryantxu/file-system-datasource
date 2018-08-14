@@ -1,3 +1,5 @@
+///<reference path="../node_modules/@types/jest/index.d.ts" />
+
 import moment from 'moment';
 
 import TemplateSrv from './lib/template_srv_stub';
