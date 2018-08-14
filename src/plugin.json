@@ -1,6 +1,6 @@
 {
   "type": "datasource",
-  "name": "Flux (InfluxDB) [BETA]",
+  "name": "Apache Avro",
   "id": "ryantxu-avro-datasource",
   "metrics": true,
   "explote": true,
@@ -10,6 +10,20 @@
   },
   "info": {
     "description": "Apache Avro in Grafa",
+    "author": {
+      "name": "Ryan McKinley",
+      "url": "https://github.com/ryantxu"
+    },
+    "links": [
+      {
+        "name": "Project site",
+        "url": "https://github.com/ryantxu/apache-avro-datasource"
+      },
+      {
+        "name": "Apache Avro",
+        "url": "https://avro.apache.org/"
+      }
+    ],
     "logos": {
       "small": "img/avro.svg",
       "large": "img/avro.svg"
