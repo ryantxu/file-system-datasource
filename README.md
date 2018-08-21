@@ -1,10 +1,10 @@
-## Apache Avro datasource for Grafana
+## Grafana Flat File Datasource
 
 [![CircleCI](https://circleci.com/gh/ryantxu/apache-avro-datasource/tree/master.svg?style=svg)](https://circleci.com/gh/ryantxu/apache-avro-datasource/tree/master)
 [![dependencies Status](https://david-dm.org/ryantxu/apache-avro-datasource/status.svg)](https://david-dm.org/ryantxu/apache-avro-datasource)
 [![devDependencies Status](https://david-dm.org/ryantxu/apache-avro-datasource/dev-status.svg)](https://david-dm.org/ryantxu/apache-avro-datasource?type=dev)
 
-This datasource loads avro files as grafana results
+Load CSV or Apache Avro files into grafana.
 
 
 ### Building
