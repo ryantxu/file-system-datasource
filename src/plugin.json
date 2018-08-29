@@ -1,7 +1,7 @@
 {
   "type": "datasource",
-  "name": "File",
-  "id": "ryantxu-file-datasource",
+  "name": "File System",
+  "id": "ryantxu-file-system-datasource",
   "metrics": true,
   "explote": true,
   "alerting": false,
@@ -9,7 +9,7 @@
     "minInterval": true
   },
   "info": {
-    "description": "Flat file loader",
+    "description": "Flat System Datasource",
     "author": {
       "name": "Ryan McKinley",
       "url": "https://github.com/ryantxu"
@@ -17,7 +17,7 @@
     "links": [
       {
         "name": "Project site",
-        "url": "https://github.com/ryantxu/file-datasource"
+        "url": "https://github.com/ryantxu/file-system-datasource"
       },
       {
         "name": "Apache Avro",
@@ -25,8 +25,8 @@
       }
     ],
     "logos": {
-      "small": "img/file.svg",
-      "large": "img/file.svg"
+      "small": "img/filesystem.svg",
+      "large": "img/filesystem.svg"
     },
     "version": "%VERSION%",
     "updated": "%TODAY%"

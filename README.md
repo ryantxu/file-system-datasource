@@ -1,10 +1,14 @@
-## Grafana Flat File Datasource
+## Grafana Flat System Datasource (WORK IN PROGRESS)
 
-[![CircleCI](https://circleci.com/gh/ryantxu/apache-avro-datasource/tree/master.svg?style=svg)](https://circleci.com/gh/ryantxu/apache-avro-datasource/tree/master)
-[![dependencies Status](https://david-dm.org/ryantxu/apache-avro-datasource/status.svg)](https://david-dm.org/ryantxu/apache-avro-datasource)
-[![devDependencies Status](https://david-dm.org/ryantxu/apache-avro-datasource/dev-status.svg)](https://david-dm.org/ryantxu/apache-avro-datasource?type=dev)
+[![CircleCI](https://circleci.com/gh/ryantxu/file-system-datasource/tree/master.svg?style=svg)](https://circleci.com/gh/ryantxu/file-system-datasource/tree/master)
+[![dependencies Status](https://david-dm.org/ryantxu/file-system-datasource/status.svg)](https://david-dm.org/ryantxu/file-system-datasource)
+[![devDependencies Status](https://david-dm.org/ryantxu/file-system-datasource/dev-status.svg)](https://david-dm.org/ryantxu/file-system-datasource?type=dev)
 
-Load CSV or Apache Avro files into grafana.
+Given a simple file system backend this datasource will:
+ * list files w/metadata
+ * expose some formats as timeseries/table data. Specifficaly:
+    * csv
+    * avro
 
 
 ### Building

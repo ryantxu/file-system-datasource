@@ -29,8 +29,7 @@
 //   ).join('&');
 // }
 
-export default class AvroDatasource {
-  type: string;
+export default class FileSystemDatasource {
   url: string;
   username: string;
   password: string;
@@ -39,14 +38,13 @@ export default class AvroDatasource {
   basicAuth: any;
   withCredentials: any;
   interval: any;
-  supportsExplore: boolean;
-  supportAnnotations: boolean;
-  supportMetrics: boolean;
-  supports
+
+  supportsExplore: boolean = true;
+  supportAnnotations: boolean = true;
+  supportMetrics: boolean = true;
 
   /** @ngInject */
   constructor(instanceSettings, private backendSrv) {
-    this.type = 'influxdb-flux';
     this.url = instanceSettings.url.trim();
 
     this.username = instanceSettings.username;
@@ -56,9 +54,7 @@ export default class AvroDatasource {
     this.withCredentials = instanceSettings.withCredentials;
     this.interval = (instanceSettings.jsonData || {}).timeInterval;
     this.database = (instanceSettings.jsonData || {}).database;
-    this.supportAnnotations = false;
-    this.supportMetrics = true;
-    this.supportsExplore = true;
+    
   }
 
   // prepareQueryTarget(target, options) {

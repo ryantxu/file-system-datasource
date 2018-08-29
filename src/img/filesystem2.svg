@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<svg version="1.1" 
+	xmlns="http://www.w3.org/2000/svg" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	x="0px" y="0px"
+	viewBox="0 0 60 60" 
+  style="enable-background:new 0 0 59.911 59.911; fill:url(#linear-gradient); stroke-width:0.1px; stroke:#0c4c75;" 
+  xml:space="preserve">
+  <defs xmlns="http://www.w3.org/2000/svg">
+    <linearGradient xmlns="http://www.w3.org/2000/svg" id="linear-gradient" x1="50" y1="101.02" x2="50" y2="4.05" gradientTransform="matrix(1, 0, 0, -1, 0, 102)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#70b0df"/><stop offset="0.5" stop-color="#1b81c5"/><stop offset="1" stop-color="#4a98ce"/></linearGradient>
+  </defs>
+<g>
+	<g>
+		<path d="M1,46h32c0.6,0,1-0.4,1-1V9l0,0c0-0.1,0-0.2-0.1-0.3V8.6c-0.1-0.1-0.1-0.2-0.2-0.3l-8-8c-0.1-0.1-0.2-0.1-0.3-0.2h-0.1
+			C25.2,0.1,25.1,0,25,0l0,0H1C0.4,0,0,0.4,0,1v44C0,45.6,0.4,46,1,46z M30.6,8H26V3.4L30.6,8z M2,2h22v7c0,0.6,0.4,1,1,1h7v34H2V2z
+			"/>
+		<path d="M40,20c0,0.6,0.4,1,1,1h6v9h2v-4h7.6l-1.3,1.3l1.4,1.4l3-3c0.4-0.4,0.4-1,0-1.4l-3-3l-1.4,1.4l1.3,1.3H49v-4l0,0
+			c0-0.1,0-0.2-0.1-0.3v-0.1c-0.1-0.1-0.1-0.2-0.2-0.3l-7-7c-0.1-0.1-0.2-0.1-0.3-0.2h-0.1c-0.1,0-0.2-0.1-0.3-0.1l0,0h-5v2h4L40,20
+			L40,20z M45.6,19H42v-3.6L45.6,19z"/>
+		<path d="M13,48h-2v4H3.4l1.3-1.3l-1.4-1.4l-3,3c-0.4,0.4-0.4,1,0,1.4l3,3l1.4-1.4L3.4,54H11v5c0,0.6,0.4,1,1,1h24v-2H13V48z"/>
+		<path d="M59.9,39.7v-0.1c-0.1-0.1-0.1-0.2-0.2-0.3l-7-7c-0.1-0.1-0.2-0.1-0.3-0.2h-0.1c-0.1,0-0.2-0.1-0.3-0.1l0,0H39
+			c-0.6,0-1,0.4-1,1v26c0,0.6,0.4,1,1,1h20c0.6,0,1-0.4,1-1V40l0,0C60,39.9,60,39.8,59.9,39.7z M56.6,39H53v-3.6L56.6,39z M40,58V34
+			h11v6c0,0.6,0.4,1,1,1h6v17H40z"/>
+		<rect x="5" y="5" width="4" height="2"/>
+		<rect x="5" y="9" width="8" height="2"/>
+		<rect x="5" y="16" width="10" height="2"/>
+		<rect x="5" y="21" width="24" height="2"/>
+		<rect x="5" y="26" width="24" height="2"/>
+		<rect x="5" y="31" width="24" height="2"/>
+		<rect x="6" y="36" width="2" height="2"/>
+		<rect x="10" y="36" width="2" height="2"/>
+		<rect x="14" y="36" width="2" height="2"/>
+		<rect x="18" y="36" width="2" height="2"/>
+		<rect x="22" y="36" width="2" height="2"/>
+		<rect x="26" y="36" width="2" height="2"/>
+		<rect x="42" y="36" width="2" height="2"/>
+		<rect x="42" y="39" width="4" height="2"/>
+		<rect x="42" y="44" width="14" height="2"/>
+		<rect x="42" y="48" width="14" height="2"/>
+		<rect x="42" y="52" width="2" height="2"/>
+		<rect x="46" y="52" width="2" height="2"/>
+		<rect x="50" y="52" width="2" height="2"/>
+		<rect x="54" y="52" width="2" height="2"/>
+		<rect x="16" y="49" width="2" height="2"/>
+		<rect x="20" y="49" width="2" height="2"/>
+		<rect x="24" y="49" width="2" height="2"/>
+		<rect x="28" y="49" width="2" height="2"/>
+		<rect x="32" y="49" width="2" height="2"/>
+		<rect x="16" y="54" width="2" height="2"/>
+		<rect x="20" y="54" width="2" height="2"/>
+		<rect x="24" y="54" width="2" height="2"/>
+		<rect x="28" y="54" width="2" height="2"/>
+		<rect x="32" y="54" width="2" height="2"/>
+		<rect x="42" y="24" width="2" height="2"/>
+		<rect x="38" y="24" width="2" height="2"/>
+		<rect x="38" y="28" width="2" height="2"/>
+		<rect x="42" y="28" width="2" height="2"/>
+	</g>
+</g>
+</svg>

@@ -1,7 +1,9 @@
+///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
+
 import appEvents from 'grafana/app/core/app_events';
 import { QueryCtrl } from 'grafana/app/plugins/sdk';
 
-export class AvroQueryCtrl extends QueryCtrl {
+export class FSQueryCtrl extends QueryCtrl {
   static templateUrl = 'partials/query.editor.html';
 
   dataPreview: any;

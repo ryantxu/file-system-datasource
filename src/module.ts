@@ -1,12 +1,14 @@
-import AvroDatasource from './datasource';
-import { AvroQueryCtrl } from './query_ctrl';
+///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
 
-class AvroConfigCtrl {
+import FileSystemDatasource from './datasource';
+import { FSQueryCtrl } from './query_ctrl';
+
+class FSConfigCtrl {
   static templateUrl = 'partials/config.html';
 }
 
 export {
-  AvroDatasource as Datasource,
-  AvroQueryCtrl as QueryCtrl,
-  AvroConfigCtrl as ConfigCtrl
+  FileSystemDatasource as Datasource,
+  FSQueryCtrl as QueryCtrl,
+  FSConfigCtrl as ConfigCtrl
 };
