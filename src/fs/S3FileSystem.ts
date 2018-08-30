@@ -7,6 +7,7 @@ export class S3FileSystem extends FS.FileSystem {
   /** @ngInject */
   constructor(instanceSettings, protected backendSrv) {
     super();
+
   }
 
   list(path:string): Promise<FS.DirectoryInfo> {

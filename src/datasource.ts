@@ -47,6 +47,18 @@ export default class FileSystemDatasource {
     return this.fs;
   }
 
+  // Used for AdHock Filters
+  getTagKeys(options) {
+    console.log( 'getTagKeys', options );
+    return Promise.resolve( ['aaa','bbb','ccc'] );
+  }
+
+  // Used for AdHock Filters
+  getTagValues(options) {
+    console.log( 'getTagValues', options );
+    return Promise.resolve( ['aaa','bbb','ccc'] );
+  }
+
   query(options) {
     console.log( 'TODO, query', options );
     return Promise.all([]).then((series: any) => {

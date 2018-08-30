@@ -22,7 +22,6 @@
     "@types/grafana": "github:CorpGlory/types-grafana.git",
     "@types/jest": "^23.3.1",
     "@types/lodash": "^4.14.74",
-    "@types/plotly.js": "^1.38.0",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
