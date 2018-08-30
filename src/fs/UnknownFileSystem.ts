@@ -7,7 +7,7 @@ export class UnknownFileSystem extends FS.FileSystem {
     super();
   }
 
-  list(path:string, dir?:FS.DirectoryInfo): Promise<FS.DirectoryInfo> {
+  list(path:string): Promise<FS.DirectoryInfo> {
     return new Promise<FS.DirectoryInfo>((resolve, reject) => {
       reject('Unknown FileSystem: '+this.instanceSettings.jsonData.type);
     });

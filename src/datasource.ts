@@ -60,6 +60,18 @@ export default class FileSystemDatasource {
   }
 
   testDatasource() {
-    return this.fs.test();
+    // TODO, if it is a direct link to a file, just get it
+
+    return this.fs.list('').then( (dir:FS.DirectoryInfo)=> {
+      return { 
+        status: 'success', message: 'Root Contains '+dir.files.length + ' Files'
+      }
+    }).catch( err => {
+      console.warn( 'Error Testing FileSystem', err, this.fs );
+      return { 
+        status: 'error', 
+        message: 'Error: '+err
+      }
+    });
   }
 }

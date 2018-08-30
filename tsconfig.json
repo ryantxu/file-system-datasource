@@ -3,33 +3,29 @@
   "compilerOptions": {
     "target": "es5",
     "module": "es6",
-    "moduleResolution": "node",
     "rootDir": "./src",
+    "lib": ["es6", "dom", "es2018.promise"],
     "jsx": "react",
-    "lib": [
-      "dom",
-      "es2015",
-      "es2016"
-    ],
     "declaration": false,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "removeComments": false,
     "inlineSourceMap": false,
     "sourceMap": true,
     "noEmitOnError": false,
     "emitDecoratorMetadata": false,
     "experimentalDecorators": true,
     "noImplicitReturns": true,
-    "noImplicitThis": false,
+    "noImplicitThis": true,
     "noImplicitUseStrict": false,
     "noImplicitAny": false,
     "noUnusedLocals": true,
-    "strictNullChecks": true
+    "pretty": true,
+    "moduleResolution": "node",
   },
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"],
+  "exclude": ["node_modules"]
 }
