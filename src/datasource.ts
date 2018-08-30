@@ -43,6 +43,10 @@ export default class FileSystemDatasource {
     }
   };
 
+  getFileSystem(): FS.FileSystem {
+    return this.fs;
+  }
+
   query(options) {
     console.log( 'TODO, query', options );
     return Promise.all([]).then((series: any) => {

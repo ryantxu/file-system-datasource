@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 export class FileInfo {
   name: string;
   modified: any; // moment(?)
