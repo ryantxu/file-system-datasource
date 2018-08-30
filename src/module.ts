@@ -2,10 +2,8 @@
 
 import FileSystemDatasource from './datasource';
 import { FSQueryCtrl } from './query_ctrl';
+import { FSConfigCtrl } from './config_ctrl';
 
-class FSConfigCtrl {
-  static templateUrl = 'partials/config.html';
-}
 
 export {
   FileSystemDatasource as Datasource,

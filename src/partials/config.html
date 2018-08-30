@@ -1,9 +1,43 @@
-<datasource-http-settings 
-	current="ctrl.current" 
-	no-direct-access="false" 
-	suggest-url="http://localhost:8888">
-</datasource-http-settings>
+
 
 <h3 class="page-heading">File System</h3>
+<div class="gf-form">
+	<span class="gf-form-label width-7">System</span>
+	<div class="gf-form-select-wrapper max-width-23">
+	  <select class="gf-form-input" 
+	    ng-model="ctrl.current.jsonData.type" 
+		ng-change="ctrl.typeChanged()"
+		>
+		<option ng-repeat="(key, value) in ctrl.getTypes()" 
+			value="{{key}}">{{value.name}}</option>
+	  </select>
+	</div>
+</div>
+<br/>
 
-TODO....
+<div ng-switch="ctrl.current.jsonData.type">
+  <!-- LOCAL -->
+  <div ng-switch-when="local">
+    TODO! when backend plugins are supported... this seems like a clear addition
+  </div>
+
+  <!-- NGINX -->
+	<div ng-switch-when="nginx">
+    <datasource-http-settings 
+      current="ctrl.current" 
+      no-direct-access="false" 
+      suggest-url="http://localhost:8888">
+    </datasource-http-settings>
+  </div>
+  
+  <!-- S3 -->
+  <div ng-switch-when="s3">
+    TODO! support listing files in S3
+  </div>
+
+  <!-- Default -->
+	<div ng-switch-default>
+    Unsupported File System: {{ ctrl.current.jsonData.type }}
+  </div>
+</div>
+
