@@ -89,7 +89,7 @@ export default class FileSystemDatasource {
     const queryTargets = options.targets
       .filter(target => target.path)
       .map(target => {
-        //const interpolated = this.templateSrv.replace(target.query, options.scopedVars);
+        target.req = this.templateSrv.replace(target.path, options.scopedVars);
         return target; // TODO change path
       });
 
@@ -100,7 +100,7 @@ export default class FileSystemDatasource {
 
     // This gets a
     const queries = queryTargets.map(target => {
-      const table = this._fetchOrUseCached(target.path);
+      const table = this._fetchOrUseCached(target.req);
       // TODO, depending on the target, it should filter the table
       // SELECT fieldname
       return table;

@@ -2,6 +2,8 @@ import Papa from "papaparse";
 
 import { Table, ResponseParser } from "../response_parser";
 
+import _ from 'lodash';
+
 export class CSVResponseParser extends ResponseParser {
   /** @ngInject */
   constructor(instanceSettings) {
@@ -22,11 +24,24 @@ export class CSVResponseParser extends ResponseParser {
           rows: papa.data as any[]
         };
 
-        // Use the first row as names
-        for (let i = 0; i < papa.data[0].length; i++) {
-          table.columns.push("Column " + (i + 1));
+        // First the first row as the header
+        if(true) {
+          const first = table.rows[0];
+          table.rows.splice(0,1); // remove the first 
+          for (let i = 0; i < first.length; i++) {
+            table.columns.push( {
+              text: '' + first[i]
+            });
+          }
         }
-
+        else {
+          // Use the first row as names
+          for (let i = 0; i < papa.data[0].length; i++) {
+            table.columns.push( {
+              text: "Column " + (i + 1)
+            });
+          }
+        }
         return table;
       }
 
