@@ -21,4 +21,7 @@ export abstract class FileSystem {
 
   // List the directory contents
   abstract list(path: string): Promise<DirectoryInfo>;
+
+  // The raw body response
+  abstract fetch(path: string): Promise<any>;
 }

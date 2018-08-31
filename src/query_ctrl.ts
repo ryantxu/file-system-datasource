@@ -17,6 +17,13 @@ export class FSQueryCtrl extends QueryCtrl {
     this.panelCtrl.events.on("data-received", this.onDataReceived, $scope);
   }
 
+  // Called from the search window
+  onKeyPress(event: any) {
+    if (event.which === 13) {
+      this.panelCtrl.refresh();
+    }
+  }
+
   onDataReceived = dataList => {
     // this.resultRecordCount = dataList.reduce((count, model) => {
     //   const records = model.type === 'table' ? model.rows.length : model.datapoints.length;

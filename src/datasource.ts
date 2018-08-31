@@ -3,6 +3,16 @@ import { NginxFileSystem } from "./fs/NginxFileSystem";
 import { LocalFileSystem } from "./fs/LocalFileSystem";
 import { S3FileSystem } from "./fs/S3FileSystem";
 import { UnknownFileSystem } from "./fs/UnknownFileSystem";
+import { ResponseParser, Table } from "./response_parser";
+import { CSVResponseParser } from "./fmt/csv_parser";
+
+import _ from "lodash";
+
+class CachedTable {
+  path: string;
+  timestamp: number;
+  table: Table;
+}
 
 export default class FileSystemDatasource {
   interval: any;
@@ -12,10 +22,11 @@ export default class FileSystemDatasource {
   supportMetrics: boolean = true;
 
   fs: FS.FileSystem;
+  csv: ResponseParser;
 
   /** @ngInject */
-  constructor(instanceSettings, public backendSrv) {
-    const safeJsonData = (instanceSettings.jsonData || {});
+  constructor(instanceSettings, public backendSrv, public templateSrv) {
+    const safeJsonData = instanceSettings.jsonData || {};
 
     this.interval = safeJsonData.timeInterval;
 
@@ -26,6 +37,8 @@ export default class FileSystemDatasource {
     } else {
       this.fs = new UnknownFileSystem(instanceSettings, backendSrv);
     }
+
+    this.csv = new CSVResponseParser(instanceSettings);
   }
 
   static registry = {
@@ -65,10 +78,54 @@ export default class FileSystemDatasource {
     return Promise.resolve(["aaa", "bbb", "ccc"]);
   }
 
+  getTimeFilter(options): string {
+    return "YYYYMMDD";
+  }
+
   query(options) {
-    console.log("TODO, query", options);
-    return Promise.all([]).then((series: any) => {
-      return { data: [] };
+    // Replace grafana variables
+    const timeFilter = this.getTimeFilter(options);
+    options.scopedVars.range = { value: timeFilter };
+    const queryTargets = options.targets
+      .filter(target => target.path)
+      .map(target => {
+        //const interpolated = this.templateSrv.replace(target.query, options.scopedVars);
+        return target; // TODO change path
+      });
+
+    // Don't bother with the query
+    if (queryTargets.length === 0) {
+      return Promise.resolve({ data: [] });
+    }
+
+    // This gets a
+    const queries = queryTargets.map(target => {
+      const table = this._fetchOrUseCached(target.path);
+      // TODO, depending on the target, it should filter the table
+      // SELECT fieldname
+      return table;
+    });
+
+    return Promise.all(queries).then((tables: any) => {
+      let theData = _.flattenDeep(tables); //.slice(0, MAX_SERIES);
+      return { data: theData };
+    });
+  }
+
+  static cache = new Map<string, CachedTable>();
+  _fetchOrUseCached(path: string): Promise<Table> {
+    let t = FileSystemDatasource.cache.get(path);
+    if (t && t.table) {
+      return Promise.resolve(t.table);
+    }
+    return this.fs.fetch(path).then(res => {
+      t = {
+        path: path,
+        table: this.csv.parse(res),
+        timestamp: Date.now()
+      };
+      FileSystemDatasource.cache.set(path, t);
+      return t.table;
     });
   }
 

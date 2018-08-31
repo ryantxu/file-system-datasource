@@ -1,16 +1,10 @@
 import _ from "lodash";
 
-import * as FS from "../FileSystem";
+import { UnknownFileSystem } from "./UnknownFileSystem";
 
-export class LocalFileSystem extends FS.FileSystem {
+export class LocalFileSystem extends UnknownFileSystem {
   /** @ngInject */
   constructor(instanceSettings, protected backendSrv) {
-    super();
-  }
-
-  list(path: string): Promise<FS.DirectoryInfo> {
-    return new Promise<FS.DirectoryInfo>((resolve, reject) => {
-      reject("Not Supported Yet");
-    });
+    super(instanceSettings, backendSrv);
   }
 }

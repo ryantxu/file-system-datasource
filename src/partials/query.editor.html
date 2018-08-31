@@ -1,5 +1,11 @@
 <query-editor-row query-ctrl="ctrl" can-collapse="true">
 
-  TODO... File System query
+  <label class="gf-form gf-form--grow gf-form--has-input-icon" >
+    <input type="text" 
+      class="gf-form-input gf-form--grow" 
+      placeholder="path/to/file.csv"
+      ng-model="ctrl.target.path" 
+      ng-keypress="ctrl.onKeyPress( $event )"/><i class="gf-form-input-icon fa fa-file-o"></i>
+  </label>
 
 </query-editor-row>
