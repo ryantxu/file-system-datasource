@@ -5,7 +5,7 @@ export class FileInfo {
 
   type?: string;
   url?: string;
-  meta?: Map<string,object>;
+  meta?: Map<string, object>;
 }
 
 export class DirectoryInfo {
@@ -18,8 +18,7 @@ export abstract class FileSystem {
   constructor() {
     // maybe more things?
   }
-  
-  // List the directory contents
-  abstract list(path:string): Promise<DirectoryInfo>;
-}
 
+  // List the directory contents
+  abstract list(path: string): Promise<DirectoryInfo>;
+}

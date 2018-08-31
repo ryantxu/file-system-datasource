@@ -1,10 +1,10 @@
 ///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
 
-import appEvents from 'grafana/app/core/app_events';
-import { QueryCtrl } from 'grafana/app/plugins/sdk';
+import appEvents from "grafana/app/core/app_events";
+import { QueryCtrl } from "grafana/app/plugins/sdk";
 
 export class FSQueryCtrl extends QueryCtrl {
-  static templateUrl = 'partials/query.editor.html';
+  static templateUrl = "partials/query.editor.html";
 
   dataPreview: any;
 
@@ -12,9 +12,9 @@ export class FSQueryCtrl extends QueryCtrl {
   constructor($scope, $injector) {
     super($scope, $injector);
 
-    appEvents.on('ds-request-response', this.onResponseReceived, $scope);
-    this.panelCtrl.events.on('refresh', this.onRefresh, $scope);
-    this.panelCtrl.events.on('data-received', this.onDataReceived, $scope);
+    appEvents.on("ds-request-response", this.onResponseReceived, $scope);
+    this.panelCtrl.events.on("refresh", this.onRefresh, $scope);
+    this.panelCtrl.events.on("data-received", this.onDataReceived, $scope);
   }
 
   onDataReceived = dataList => {
@@ -30,16 +30,16 @@ export class FSQueryCtrl extends QueryCtrl {
   };
 
   onRefresh = () => {
-    this.dataPreview = '';
+    this.dataPreview = "";
   };
 
   onChange = nextQuery => {
-    console.log('nextQuery', nextQuery);
+    console.log("nextQuery", nextQuery);
     this.target.query = nextQuery;
   };
 
   onExecute = () => {
-    console.log('Avro refresh metric data', this.target);
+    console.log("Avro refresh metric data", this.target);
     this.panelCtrl.refresh();
   };
 
