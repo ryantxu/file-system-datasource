@@ -15,9 +15,11 @@ export default class FileSystemDatasource {
 
   /** @ngInject */
   constructor(instanceSettings, public backendSrv) {
-    this.interval = (instanceSettings.jsonData || {}).timeInterval;
+    const safeJsonData = (instanceSettings.jsonData || {});
 
-    const type = instanceSettings.jsonData.type;
+    this.interval = safeJsonData.timeInterval;
+
+    const type = safeJsonData.type;
     const builder = FileSystemDatasource.registry[type];
     if (builder) {
       this.fs = builder.create(instanceSettings, backendSrv);
