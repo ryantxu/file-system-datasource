@@ -58,12 +58,11 @@ export abstract class HttpFileSystem extends FS.FileSystem {
             };
           }
         }
-        if(err.err) {
+        if (err.err) {
           err = err.err;
         }
         throw {
-          message:
-            "Network Error: " + err.statusText + "(" + err.status + ")",
+          message: "Network Error: " + err.statusText + "(" + err.status + ")",
           data: err.data,
           config: err.config
         };

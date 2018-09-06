@@ -4,10 +4,7 @@
   "id": "ryantxu-file-system-datasource",
   "metrics": true,
   "explote": true,
-  "alerting": false,
-  "queryOptions": {
-    "minInterval": true
-  },
+  "alerting": true,
   "info": {
     "description": "Flat System Datasource",
     "author": {

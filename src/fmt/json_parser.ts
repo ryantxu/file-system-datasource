@@ -1,54 +1,118 @@
-import Papa from "papaparse";
 import { ResponseParser, Table } from "../response_parser";
 
 import _ from "lodash";
 
-export class CSVResponseParser extends ResponseParser {
+//import flatten from 'app/core/utils/flatten';
+// Copyright (c) 2014, Hugh Kennedy
+// Based on code from https://github.com/hughsk/flat/blob/master/index.js
+//
+export default function flatten(target, opts): any {
+  opts = opts || {};
+
+  const delimiter = opts.delimiter || '.';
+  let maxDepth = opts.maxDepth || 3;
+  let currentDepth = 1;
+  const output = {};
+
+  function step(object, prev) {
+    Object.keys(object).forEach(function(key) {
+      const value = object[key];
+      const isarray = opts.safe && Array.isArray(value);
+      const type = Object.prototype.toString.call(value);
+      const isobject = type === '[object Object]';
+
+      const newKey = prev ? prev + delimiter + key : key;
+
+      if (!opts.maxDepth) {
+        maxDepth = currentDepth + 1;
+      }
+
+      if (!isarray && isobject && Object.keys(value).length && currentDepth < maxDepth) {
+        ++currentDepth;
+        return step(value, newKey);
+      }
+
+      output[newKey] = value;
+    });
+  }
+
+  step(target, null);
+
+  return output;
+}
+
+
+export class JSONResponseParser extends ResponseParser {
   /** @ngInject */
   constructor(instanceSettings) {
     super();
   }
 
-  parse(rsp: any): Table {
-    if (rsp.data) {
-      const papa = Papa.parse(rsp.data, {
-        header: false,
-        dynamicTyping: true
-      });
+  _arrayToTable(arr: any[]):Table {
+    console.log( 'TODO, json to table', arr );
 
-      if (papa.data && papa.data.length > 0) {
-        let table: Table = {
-          type: "table",
-          columns: [],
-          rows: papa.data as any[]
-        };
+    let table = {
+      type: "table",
+      columns: [],
+      rows: [],
+    };
 
-        // First the first row as the header
-        if (true) {
-          const first = table.rows[0];
-          table.rows.splice(0, 1); // remove the first
-          for (let i = 0; i < first.length; i++) {
-            table.columns.push({
-              text: "" + first[i]
-            });
-          }
-        } else {
-          // Use the first row as names
-          for (let i = 0; i < papa.data[0].length; i++) {
-            table.columns.push({
-              text: "Column " + (i + 1)
-            });
-          }
+    const flat:any[] = [];
+    const names: string[] = [];
+    const found: any = {};
+    for (let i = 0; i < arr.length; i++) {
+      const f = flatten(arr[i], null);
+      for (const propName in f) {
+        if(!found.hasOwnProperty(propName)) {
+          found[propName] = true;
+          names.push(propName);
+          table.columns.push( {
+            text: propName
+          }); 
         }
-        return table;
+      }
+      flat.push(f);
+    }
+
+    // Add each value
+    _.forEach(flat, f => {
+      let row = [];
+      for(let i=0; i<names.length; i++) {
+        row.push(_.get(f, names[i]));
+      }
+      table.rows.push(row);
+    });
+    return table;
+  }
+
+  parse(rsp: any, contentType?:string): Table {
+    if (rsp.data) {
+      if(_.isArray(rsp.data)) {
+        return this._arrayToTable(rsp.data);
+      }
+      const keys = _.keys(rsp.data);
+      if(keys.length == 1) {
+        const first = rsp.data[keys[0]];
+        if(_.isArray(first)) {
+          return this._arrayToTable(first);
+        }
       }
 
-      // Empty response
-      return {
+      // This will be a table with a single row
+      const table = {
         type: "table",
         rows: [],
         columns: []
       };
+      const row = [];
+      table.rows.push(row);
+      _.forEach(rsp.data, (value, key) => {
+        table.columns.push( {
+          text: key
+        });
+        row.push(value);
+      });
+      return table;
     }
     throw {
       message: "Invalid response: " + rsp.statusText,

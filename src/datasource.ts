@@ -4,7 +4,10 @@ import { LocalFileSystem } from "./fs/LocalFileSystem";
 import { S3FileSystem } from "./fs/S3FileSystem";
 import { UnknownFileSystem } from "./fs/UnknownFileSystem";
 import { ResponseParser, Table } from "./response_parser";
+
 import { CSVResponseParser } from "./fmt/csv_parser";
+import { JSONResponseParser } from "./fmt/json_parser";
+import { AvroResponseParser } from "./fmt/avro_parser";
 
 import _ from "lodash";
 
@@ -22,7 +25,8 @@ export default class FileSystemDatasource {
   supportMetrics: boolean = true;
 
   fs: FS.FileSystem;
-  csv: ResponseParser;
+
+  parsers: Map<string,ResponseParser> = new Map();
 
   /** @ngInject */
   constructor(instanceSettings, public backendSrv, public templateSrv) {
@@ -38,7 +42,9 @@ export default class FileSystemDatasource {
       this.fs = new UnknownFileSystem(instanceSettings, backendSrv);
     }
 
-    this.csv = new CSVResponseParser(instanceSettings);
+    this.parsers["csv"] = new CSVResponseParser(instanceSettings);
+    this.parsers["avro"] = new AvroResponseParser(instanceSettings);
+    this.parsers["json"] = new JSONResponseParser(instanceSettings);
   }
 
   static registry = {
@@ -119,9 +125,18 @@ export default class FileSystemDatasource {
       return Promise.resolve(t.table);
     }
     return this.fs.fetch(path).then(res => {
+      const headers = res.headers();
+      const contentType = headers['content-type'];
+      let parser = this.parsers["csv"]; // default
+      if(contentType && contentType.indexOf('json')>=0) {
+        parser = this.parsers["json"]; 
+      }
+      else if (path.indexOf('.avro')>=0) {
+        parser = this.parsers["avro"]; 
+      }
       t = {
         path: path,
-        table: this.csv.parse(res),
+        table: parser.parse(res, contentType),
         timestamp: Date.now()
       };
       FileSystemDatasource.cache.set(path, t);

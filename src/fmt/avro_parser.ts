@@ -1,46 +1,51 @@
-import Papa from "papaparse";
 import { ResponseParser, Table } from "../response_parser";
 
 import _ from "lodash";
 
-export class CSVResponseParser extends ResponseParser {
+import { createBlobDecoder } from 'avsc';
+
+export class AvroResponseParser extends ResponseParser {
   /** @ngInject */
   constructor(instanceSettings) {
     super();
   }
 
-  parse(rsp: any): Table {
+  parse(rsp: any, contentType?:string): Table {
     if (rsp.data) {
-      const papa = Papa.parse(rsp.data, {
-        header: false,
-        dynamicTyping: true
+      const blob = new Blob([rsp.data], {
+        type: contentType,
       });
 
-      if (papa.data && papa.data.length > 0) {
-        let table: Table = {
-          type: "table",
-          columns: [],
-          rows: papa.data as any[]
-        };
-
-        // First the first row as the header
-        if (true) {
-          const first = table.rows[0];
-          table.rows.splice(0, 1); // remove the first
-          for (let i = 0; i < first.length; i++) {
-            table.columns.push({
-              text: "" + first[i]
-            });
-          }
-        } else {
-          // Use the first row as names
-          for (let i = 0; i < papa.data[0].length; i++) {
-            table.columns.push({
-              text: "Column " + (i + 1)
-            });
-          }
+      try {
+        const dd = {
+          noDecode: false,
+          //readerSchema: string | object | Type;
+          //codecs: CodecOptions;
+          // parseHook: (schema):Type => {
+          //   let t:Type;
+          //   console.log( 'schema', schema );
+          //   return t;
+          // }
         }
-        return table;
+
+        const decoder:any = createBlobDecoder(blob, dd);
+        decoder.on('metadata', (writerType) => {
+          console.log('meta', writerType);
+        })
+        .on('data', (obj) => {
+          console.log('data', obj);
+        })
+        .on('end', () => {
+          console.log('end');
+        })
+        .on('error', (err) => {
+          console.warn('error', err);
+        });
+
+        console.log('DECODER', decoder );
+      }
+      catch(ex) {
+        console.error('ERROR reading avro', ex);
       }
 
       // Empty response
