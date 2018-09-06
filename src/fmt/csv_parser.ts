@@ -9,52 +9,60 @@ export class CSVResponseParser extends ResponseParser {
     super();
   }
 
-  parse(rsp: any): Table {
-    if (rsp.data) {
-      const papa = Papa.parse(rsp.data, {
-        header: false,
-        dynamicTyping: true
-      });
+  _toTable(data):Table {
+    const papa = Papa.parse(data, {
+      header: false,
+      dynamicTyping: true
+    });
 
-      if (papa.data && papa.data.length > 0) {
-        let table: Table = {
-          type: "table",
-          columns: [],
-          rows: papa.data as any[]
-        };
-
-        // First the first row as the header
-        if (true) {
-          const first = table.rows[0];
-          table.rows.splice(0, 1); // remove the first
-          for (let i = 0; i < first.length; i++) {
-            table.columns.push({
-              text: "" + first[i]
-            });
-          }
-        } else {
-          // Use the first row as names
-          for (let i = 0; i < papa.data[0].length; i++) {
-            table.columns.push({
-              text: "Column " + (i + 1)
-            });
-          }
-        }
-        return table;
-      }
-
-      // Empty response
-      return {
+    if (papa.data && papa.data.length > 0) {
+      let table: Table = {
         type: "table",
-        rows: [],
-        columns: []
+        columns: [],
+        rows: papa.data as any[]
       };
+
+      // First the first row as the header
+      if (true) {
+        const first = table.rows[0];
+        table.rows.splice(0, 1); // remove the first
+        for (let i = 0; i < first.length; i++) {
+          table.columns.push({
+            text: "" + first[i]
+          });
+        }
+      } else {
+        // Use the first row as names
+        for (let i = 0; i < papa.data[0].length; i++) {
+          table.columns.push({
+            text: "Column " + (i + 1)
+          });
+        }
+      }
+      return table;
     }
-    throw {
-      message: "Invalid response: " + rsp.statusText,
-      data: rsp.data,
-      config: rsp.config
-    };
+
+    // Empty response
+    return({
+      type: "table",
+      rows: [],
+      columns: []
+    });
+  }
+
+  parse(rsp: any): Promise<Table> {
+    return new Promise((resolve,reject) => {
+      if (rsp.data) {
+        resolve(this._toTable(rsp.data));
+      }
+      else {
+        reject( {
+          message: "Invalid response: " + rsp.statusText,
+          data: rsp.data,
+          config: rsp.config
+        });
+      }
+    });
   }
 }
 
@@ -191,3 +199,4 @@ export class CSVResponseParser extends ResponseParser {
 //   const data = parseCSV(result);
 //   return data.map(record => record['_value']);
 // }
+

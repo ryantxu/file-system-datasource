@@ -12,5 +12,5 @@ export interface Table {
 }
 
 export abstract class ResponseParser {
-  abstract parse(rsp: any): Table;
+  abstract parse(rsp: any): Promise<Table>;
 }

@@ -6,8 +6,10 @@ import TemplateSrv from './lib/template_srv_stub';
 
 import Datasource from '../src/datasource';
 
-describe('Avro Datasrouce', () => {
-  const ds = new Datasource({ url: '' }, {});
+describe('File System Datasrouce', () => {
+  const templateSrv = new TemplateSrv();
+  const backendSrv = {};
+  const ds = new Datasource({ url: '' }, backendSrv, templateSrv);
   const DEFAULT_OPTIONS = {
     rangeRaw: { to: 'now', from: 'now - 3h' },
     scopedVars: {},
@@ -19,7 +21,7 @@ describe('Avro Datasrouce', () => {
     let target: any;
     const res = 5+5;
 
-    it('should do simple things', () => {
+    it('just a stub test', () => {
       const res = 5+5;
       expect(res).toBe(10);
     });

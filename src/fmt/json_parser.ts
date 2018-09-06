@@ -85,40 +85,48 @@ export class JSONResponseParser extends ResponseParser {
     return table;
   }
 
-  parse(rsp: any, contentType?:string): Table {
-    if (rsp.data) {
-      if(_.isArray(rsp.data)) {
-        return this._arrayToTable(rsp.data);
-      }
-      const keys = _.keys(rsp.data);
-      if(keys.length == 1) {
-        const first = rsp.data[keys[0]];
-        if(_.isArray(first)) {
-          return this._arrayToTable(first);
-        }
-      }
-
-      // This will be a table with a single row
-      const table = {
-        type: "table",
-        rows: [],
-        columns: []
-      };
-      const row = [];
-      table.rows.push(row);
-      _.forEach(rsp.data, (value, key) => {
-        table.columns.push( {
-          text: key
-        });
-        row.push(value);
-      });
-      return table;
+  _toTable(data):Table {
+    if(_.isArray(data)) {
+      return this._arrayToTable(data);
     }
-    throw {
-      message: "Invalid response: " + rsp.statusText,
-      data: rsp.data,
-      config: rsp.config
+    const keys = _.keys(data);
+    if(keys.length == 1) {
+      const first = data[keys[0]];
+      if(_.isArray(first)) {
+        return this._arrayToTable(first);
+      }
+    }
+
+    // This will be a table with a single row
+    const table = {
+      type: "table",
+      rows: [],
+      columns: []
     };
+    const row = [];
+    table.rows.push(row);
+    _.forEach(data, (value, key) => {
+      table.columns.push( {
+        text: key
+      });
+      row.push(value);
+    });
+    return table;
+  }
+
+  parse(rsp: any, contentType?:string): Promise<Table> {
+    return new Promise( (resolve,reject)=> {
+      if (rsp.data) {
+        resolve(this._toTable(rsp.data));
+      }
+      else {
+        reject( {
+          message: "Invalid response: " + rsp.statusText,
+          data: rsp.data,
+          config: rsp.config
+        });
+      }
+    });
   }
 }
 
