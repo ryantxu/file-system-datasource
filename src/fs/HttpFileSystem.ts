@@ -36,11 +36,11 @@ export abstract class HttpFileSystem extends FS.FileSystem {
   }
 
   // basic get request
-  fetch(path: string, blob:boolean=false): Promise<any> {
+  fetch(path: string, blob: boolean = false): Promise<any> {
     return this.request({
       url: this.safeMergeURL(path),
       method: "GET",
-      responseType : blob ? 'blob': '',
+      responseType: blob ? "blob" : ""
     });
   }
 

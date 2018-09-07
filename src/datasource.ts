@@ -26,7 +26,7 @@ export default class FileSystemDatasource {
 
   fs: FS.FileSystem;
 
-  parsers: Map<string,ResponseParser> = new Map();
+  parsers: Map<string, ResponseParser> = new Map();
 
   /** @ngInject */
   constructor(instanceSettings, public backendSrv, public templateSrv) {
@@ -126,34 +126,33 @@ export default class FileSystemDatasource {
     }
 
     // Find the extension
-    let ext = '';
+    let ext = "";
     let norm = path;
-    let idx = norm.lastIndexOf('?');
-    if(idx>0) {
-      norm = path.substring(0,idx);
+    let idx = norm.lastIndexOf("?");
+    if (idx > 0) {
+      norm = path.substring(0, idx);
     }
-    idx = norm.lastIndexOf('#');
-    if(idx>0) {
-      norm = path.substring(0,idx);
+    idx = norm.lastIndexOf("#");
+    if (idx > 0) {
+      norm = path.substring(0, idx);
     }
-    idx = norm.lastIndexOf('.');
-    if(idx>0) {
-      ext = norm.substr(idx+1).toLowerCase();
+    idx = norm.lastIndexOf(".");
+    if (idx > 0) {
+      ext = norm.substr(idx + 1).toLowerCase();
     }
 
     // Right now keyed to ending with .avro
-    const isAvro = (ext === 'avro');
+    const isAvro = ext === "avro";
     const isBinary = isAvro;
 
     return this.fs.fetch(path, isBinary).then(res => {
       const headers = res.headers();
-      const contentType = headers['content-type'];
+      const contentType = headers["content-type"];
       let parser = this.parsers["csv"]; // default
-      if(contentType && contentType.indexOf('json')>=0) {
-        parser = this.parsers["json"]; 
-      }
-      else if (isAvro) {
-        parser = this.parsers["avro"]; 
+      if (contentType && contentType.indexOf("json") >= 0) {
+        parser = this.parsers["json"];
+      } else if (isAvro) {
+        parser = this.parsers["avro"];
       }
       t = {
         path: path,

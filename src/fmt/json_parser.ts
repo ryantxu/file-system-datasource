@@ -9,7 +9,7 @@ import _ from "lodash";
 export default function flatten(target, opts): any {
   opts = opts || {};
 
-  const delimiter = opts.delimiter || '.';
+  const delimiter = opts.delimiter || ".";
   let maxDepth = opts.maxDepth || 3;
   let currentDepth = 1;
   const output = {};
@@ -19,7 +19,7 @@ export default function flatten(target, opts): any {
       const value = object[key];
       const isarray = opts.safe && Array.isArray(value);
       const type = Object.prototype.toString.call(value);
-      const isobject = type === '[object Object]';
+      const isobject = type === "[object Object]";
 
       const newKey = prev ? prev + delimiter + key : key;
 
@@ -27,7 +27,12 @@ export default function flatten(target, opts): any {
         maxDepth = currentDepth + 1;
       }
 
-      if (!isarray && isobject && Object.keys(value).length && currentDepth < maxDepth) {
+      if (
+        !isarray &&
+        isobject &&
+        Object.keys(value).length &&
+        currentDepth < maxDepth
+      ) {
         ++currentDepth;
         return step(value, newKey);
       }
@@ -41,32 +46,31 @@ export default function flatten(target, opts): any {
   return output;
 }
 
-
 export class JSONResponseParser extends ResponseParser {
   /** @ngInject */
   constructor(instanceSettings) {
     super();
   }
 
-  _arrayToTable(arr: any[]):Table {
+  _arrayToTable(arr: any[]): Table {
     let table = {
       type: "table",
       columns: [],
-      rows: [],
+      rows: []
     };
 
-    const flat:any[] = [];
+    const flat: any[] = [];
     const names: string[] = [];
     const found: any = {};
     for (let i = 0; i < arr.length; i++) {
       const f = flatten(arr[i], null);
       for (const propName in f) {
-        if(!found.hasOwnProperty(propName)) {
+        if (!found.hasOwnProperty(propName)) {
           found[propName] = true;
           names.push(propName);
-          table.columns.push( {
+          table.columns.push({
             text: propName
-          }); 
+          });
         }
       }
       flat.push(f);
@@ -75,7 +79,7 @@ export class JSONResponseParser extends ResponseParser {
     // Add each value
     _.forEach(flat, f => {
       let row = [];
-      for(let i=0; i<names.length; i++) {
+      for (let i = 0; i < names.length; i++) {
         row.push(_.get(f, names[i]));
       }
       table.rows.push(row);
@@ -83,14 +87,14 @@ export class JSONResponseParser extends ResponseParser {
     return table;
   }
 
-  _toTable(data):Table {
-    if(_.isArray(data)) {
+  _toTable(data): Table {
+    if (_.isArray(data)) {
       return this._arrayToTable(data);
     }
     const keys = _.keys(data);
-    if(keys.length == 1) {
+    if (keys.length == 1) {
       const first = data[keys[0]];
-      if(_.isArray(first)) {
+      if (_.isArray(first)) {
         return this._arrayToTable(first);
       }
     }
@@ -104,7 +108,7 @@ export class JSONResponseParser extends ResponseParser {
     const row = [];
     table.rows.push(row);
     _.forEach(data, (value, key) => {
-      table.columns.push( {
+      table.columns.push({
         text: key
       });
       row.push(value);
@@ -112,13 +116,12 @@ export class JSONResponseParser extends ResponseParser {
     return table;
   }
 
-  parse(rsp: any, contentType?:string): Promise<Table> {
-    return new Promise( (resolve,reject)=> {
+  parse(rsp: any, contentType?: string): Promise<Table> {
+    return new Promise((resolve, reject) => {
       if (rsp.data) {
         resolve(this._toTable(rsp.data));
-      }
-      else {
-        reject( {
+      } else {
+        reject({
           message: "Invalid response: " + rsp.statusText,
           data: rsp.data,
           config: rsp.config

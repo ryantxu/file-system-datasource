@@ -9,7 +9,7 @@ export class CSVResponseParser extends ResponseParser {
     super();
   }
 
-  _toTable(data):Table {
+  _toTable(data): Table {
     const papa = Papa.parse(data, {
       header: false,
       dynamicTyping: true
@@ -43,20 +43,19 @@ export class CSVResponseParser extends ResponseParser {
     }
 
     // Empty response
-    return({
+    return {
       type: "table",
       rows: [],
       columns: []
-    });
+    };
   }
 
   parse(rsp: any): Promise<Table> {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
       if (rsp.data) {
         resolve(this._toTable(rsp.data));
-      }
-      else {
-        reject( {
+      } else {
+        reject({
           message: "Invalid response: " + rsp.statusText,
           data: rsp.data,
           config: rsp.config
@@ -199,4 +198,3 @@ export class CSVResponseParser extends ResponseParser {
 //   const data = parseCSV(result);
 //   return data.map(record => record['_value']);
 // }
-
