@@ -124,14 +124,35 @@ export default class FileSystemDatasource {
     if (t && t.table) {
       return Promise.resolve(t.table);
     }
-    return this.fs.fetch(path).then(res => {
+
+    // Find the extension
+    let ext = '';
+    let norm = path;
+    let idx = norm.lastIndexOf('?');
+    if(idx>0) {
+      norm = path.substring(0,idx);
+    }
+    idx = norm.lastIndexOf('#');
+    if(idx>0) {
+      norm = path.substring(0,idx);
+    }
+    idx = norm.lastIndexOf('.');
+    if(idx>0) {
+      ext = norm.substr(idx+1).toLowerCase();
+    }
+
+    // Right now keyed to ending with .avro
+    const isAvro = (ext === 'avro');
+    const isBinary = isAvro;
+
+    return this.fs.fetch(path, isBinary).then(res => {
       const headers = res.headers();
       const contentType = headers['content-type'];
       let parser = this.parsers["csv"]; // default
       if(contentType && contentType.indexOf('json')>=0) {
         parser = this.parsers["json"]; 
       }
-      else if (path.indexOf('.avro')>=0) {
+      else if (isAvro) {
         parser = this.parsers["avro"]; 
       }
       t = {

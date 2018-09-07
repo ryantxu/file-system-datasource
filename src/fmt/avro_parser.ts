@@ -63,15 +63,19 @@ export class AvroResponseParser extends ResponseParser {
    */
   parse(rsp: any, contentType?:string): Promise<Table> {
     if (rsp.data) {
-      const blob = new Blob([rsp.data], {
-        type: contentType,
-      });
-      return this.decode( createBlobDecoder(blob, {}) );
+      if(rsp.data instanceof Blob) {
+        return this.decode( createBlobDecoder(rsp.data, {}) );
+      }
+      
+      return Promise.reject( {
+        message: "Avro expects a blob response",
+        data: rsp.data,
+        config: rsp.config
+      }) as any;
     }
 
     return Promise.reject( {
-        message: "Invalid response: " + rsp.statusText,
-        data: rsp.data,
+        message: "Missing Data in response: " + rsp.statusText,
         config: rsp.config
       }) as any;
   }

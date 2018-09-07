@@ -16,7 +16,7 @@ export class UnknownFileSystem extends FS.FileSystem {
     });
   }
 
-  fetch(path: string): Promise<any> {
+  fetch(path: string, blob:boolean=false): Promise<any> {
     return new Promise<FS.DirectoryInfo>((resolve, reject) => {
       reject("Fetch Not Supported Yet: " + this.fstype);
     });

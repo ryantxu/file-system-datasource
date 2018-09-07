@@ -49,8 +49,6 @@ export class JSONResponseParser extends ResponseParser {
   }
 
   _arrayToTable(arr: any[]):Table {
-    console.log( 'TODO, json to table', arr );
-
     let table = {
       type: "table",
       columns: [],

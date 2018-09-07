@@ -23,5 +23,5 @@ export abstract class FileSystem {
   abstract list(path: string): Promise<DirectoryInfo>;
 
   // The raw body response
-  abstract fetch(path: string): Promise<any>;
+  abstract fetch(path: string, blob?:boolean): Promise<any>;
 }
