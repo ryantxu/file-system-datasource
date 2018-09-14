@@ -40,13 +40,8 @@ export class FSQueryCtrl extends QueryCtrl {
     this.dataPreview = "";
   };
 
-  onChange = nextQuery => {
-    console.log("nextQuery", nextQuery);
-    this.target.query = nextQuery;
-  };
-
   onExecute = () => {
-    console.log("Avro refresh metric data", this.target);
+    console.log("refresh metric data", this.target);
     this.panelCtrl.refresh();
   };
 

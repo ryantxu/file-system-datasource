@@ -3,7 +3,7 @@ import { NginxFileSystem } from "./fs/NginxFileSystem";
 import { LocalFileSystem } from "./fs/LocalFileSystem";
 import { S3FileSystem } from "./fs/S3FileSystem";
 import { UnknownFileSystem } from "./fs/UnknownFileSystem";
-import { ResponseParser, Table } from "./response_parser";
+import { ResponseParser, Table, processChanges, SeriesInfo } from "./response_parser";
 
 import { CSVResponseParser } from "./fmt/csv_parser";
 import { JSONResponseParser } from "./fmt/json_parser";
@@ -104,17 +104,27 @@ export default class FileSystemDatasource {
       return Promise.resolve({ data: [] });
     }
 
-    // This gets a
+    // Fetch the data and proecess
     const queries = queryTargets.map(target => {
-      const table = this._fetchOrUseCached(target.req);
-      // TODO, depending on the target, it should filter the table
-      // SELECT fieldname
-      return table;
+      return this._fetchOrUseCached(target.req).then( table => {
+        if(target.changes) {
+          const info:SeriesInfo = processChanges(table);
+          const ddd = [];
+          _.forEach( info.order, name => {
+            ddd.push( {
+              target: name,
+              alias: name,
+              datapoints: info.series.get(name)
+            });
+          });
+          return ddd;
+        }
+        return table;
+      });
     });
 
-    return Promise.all(queries).then((tables: any) => {
-      let theData = _.flattenDeep(tables); //.slice(0, MAX_SERIES);
-      return { data: theData };
+    return Promise.all(queries).then((data: any) => {
+      return { data: _.flattenDeep( data ) };
     });
   }
 
