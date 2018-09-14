@@ -45,11 +45,12 @@ export abstract class HttpFileSystem extends FS.FileSystem {
   }
 
   request(req: any): Promise<any> {
+    //console.log('REQ', req, this);
     return this.backendSrv.datasourceRequest(req).then(
       result => {
         return result;
       },
-      function(err) {
+      err => {
         if (err.status !== 0 || err.status >= 300) {
           if (err.data && err.data.error) {
             throw {

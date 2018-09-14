@@ -182,10 +182,14 @@ export default class FileSystemDatasource {
       })
       .catch(err => {
         console.warn("Error Testing FileSystem", err, this.fs);
-        return {
+        const rsp = {
           status: "error",
           message: "Error: " + err
         };
+        if(err.cancelled && err.err) {
+          rsp.message = "Error making HTTP request.  Check the javascrit console for more information";
+        }
+        return rsp;
       });
   }
 }

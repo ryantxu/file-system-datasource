@@ -2,6 +2,7 @@ import { ResponseParser, Table } from "../response_parser";
 
 import _ from "lodash";
 
+// import did not work :( maybe just typescript error?
 //import flatten from 'app/core/utils/flatten';
 // Copyright (c) 2014, Hugh Kennedy
 // Based on code from https://github.com/hughsk/flat/blob/master/index.js

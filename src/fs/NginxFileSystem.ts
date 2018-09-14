@@ -38,8 +38,7 @@ export class NginxFileSystem extends HttpFileSystem {
       });
     }
     const reqURL = this.urlEndingWithSlash + req.substr(1);
-    return this.backendSrv
-      .datasourceRequest({
+    return this.request({
         url: reqURL,
         method: "GET"
       })
